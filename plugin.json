@@ -1,0 +1,12 @@
+{
+    "ID":"5681a82267eb11e891758e15d306b186",
+    "ActionKeyword":"cb",
+    "Name":"cmd blog",
+    "Description":"github cmd blog",
+    "Author":"Perry Sun",
+    "Version":"1.0.0",
+    "Language":"python",
+    "Website":"https://github.com/",
+    "ExecuteFileName":"main.py",
+    "IcoPath":"icon.png"
+}
