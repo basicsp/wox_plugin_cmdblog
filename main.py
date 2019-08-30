@@ -1,7 +1,7 @@
 import requests
 import json
 import webbrowser
-from wox import Wox
+from wox import Wox, WoxAPI
 import os
 import logging
 from dirtree import DirTree
@@ -31,7 +31,7 @@ def list_nested(list_md):
         ast = CommonMark.DocParser().parse(list_md)
         return CMarkASTNester().nest(ast)
     except:
-        logging.error("md文件不符合格式或没有h1的标题")
+        logging.error("markdown file must has H1 title!")
 
 
 # 获取MD文件用raw
@@ -45,7 +45,6 @@ cmdblog_path = os.path.join(dir, 'cmdblog')
 
 
 class Main(Wox):
-# class Main():
 
     @staticmethod
     def update_github():
@@ -55,9 +54,11 @@ class Main(Wox):
                 os.chdir(dir)
                 # os.mkdir(cmdblog_path)  # git clone 可以生成该文件夹
                 os.system("git clone https://github.com/basicsp/cmdblog.git")
+                WoxAPI.show_msg('update_github', 'git clone is over.')
             else:
                 os.chdir(cmdblog_path)
                 os.system("git pull")
+                WoxAPI.show_msg('update_github', 'git pull is over.')
         except Exception as e:
             return str(e)
         else:
@@ -92,7 +93,10 @@ class Main(Wox):
                         "IcoPath": "icon.png",
                         # 打开所在的文件夹路径
                         "JsonRPCAction": {
-                            "method": "openUrl", "parameters": [DIR_BASE_URL + str(k)]},
+                            # "method": "openUrl", "parameters": [DIR_BASE_URL + str(k)]},
+                            "method": "change_query", "parameters": ['cb ' + k],
+                            "dontHideAfterAction": True,  # True: 执行操作后不隐藏wox
+                        }
                     }
                     results.append(res)
             return results
@@ -118,16 +122,27 @@ class Main(Wox):
                                         "IcoPath": "icon.png",
                                         "JsonRPCAction": {  # 打开所在的文件夹路径
                                             "method": "copy_to_clip", "parameters": [y],  # 将命令拷贝到剪贴板
-                                            "dontHideAfterAction": True}  # True: 执行操作后不隐藏wox
+                                        }
                                     }
                                     results.append(res)
             return results
 
     def openUrl(self, url):
+        """method"""
         webbrowser.open(url)
 
     def copy_to_clip(self, text):
+        """method"""
         clipboard.copy(text)
+        WoxAPI.show_msg(text, text + "copy is over.")
+
+    def context_menu(self, data):
+        """method: 点右键或者shift+enter时，打开的菜单，用法同query"""
+        return []
+
+    def change_query(self, q):
+        """method: 在搜索框替换新的查询字符串"""
+        WoxAPI.change_query(q, False)  # False: change过后不需要重新查询，但由于往往会触发一次query
 
 
 if __name__ == "__main__":
@@ -136,4 +151,3 @@ if __name__ == "__main__":
     # print(Main().query('update'))
     # print(Main().query('pyth'))
     # print(Main().query('python vi'))
-
