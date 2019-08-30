@@ -89,12 +89,12 @@ class Main(Wox):
                 if k.find(q1) != -1:
                     res = {
                         "Title": k,
-                        "SubTitle": k + "（回车可打开url）",
+                        "SubTitle": k + "（回车自动补全）",
                         "IcoPath": "icon.png",
                         # 打开所在的文件夹路径
                         "JsonRPCAction": {
                             # "method": "openUrl", "parameters": [DIR_BASE_URL + str(k)]},
-                            "method": "change_query", "parameters": ['cb ' + k],
+                            "method": "change_query", "parameters": ['cb ' + k + ' '],
                             "dontHideAfterAction": True,  # True: 执行操作后不隐藏wox
                         }
                     }
