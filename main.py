@@ -4,7 +4,9 @@ import webbrowser
 from wox import Wox, WoxAPI
 import os
 import logging
+
 from dirtree import DirTree
+from pertty import pertty
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
@@ -116,14 +118,25 @@ class Main(Wox):
                                 j1 = list_nested(f.read())
                                 j2 = Renderer().stringify_dict(j1)
                                 for x, y in j2['Summary'].items() if 'Summary' in j2 else {}:
-                                    res = {
-                                        "Title": k + ": " + x,
-                                        "SubTitle": y + "（回车可复制命令行）",
-                                        "IcoPath": "icon.png",
-                                        "JsonRPCAction": {  # 打开所在的文件夹路径
-                                            "method": "copy_to_clip", "parameters": [y],  # 将命令拷贝到剪贴板
+                                    p = pertty(y)
+                                    if p[0:4].lower() == "http":
+                                        res = {
+                                            "Title": k + ": " + x,
+                                            "SubTitle": p + "（回车可打开url）",
+                                            "IcoPath": "icon.png",
+                                            "JsonRPCAction": {  # 打开所在的文件夹路径
+                                                "method": "openUrl", "parameters": [p],  # 将命令拷贝到剪贴板
+                                            }
                                         }
-                                    }
+                                    else:
+                                        res = {
+                                            "Title": k + ": " + x,
+                                            "SubTitle": p + "（回车可复制命令行）",
+                                            "IcoPath": "icon.png",
+                                            "JsonRPCAction": {  # 打开所在的文件夹路径
+                                                "method": "copy_to_clip", "parameters": [p],  # 将命令拷贝到剪贴板
+                                            }
+                                        }
                                     results.append(res)
             return results
 
