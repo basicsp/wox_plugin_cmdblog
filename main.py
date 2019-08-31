@@ -69,7 +69,8 @@ class Main(Wox):
     def query(self, query):
 
         if not query:
-            return [{'Title': 'cmd blog', 'SubTitle': 'cb for cmb blog on github', 'IcoPath': 'icon.png',
+            return [{'Title': 'cmd blog', 'SubTitle': 'cb for cmb blog on github. author: perrysun82@gmail.com（点击打开github项目）',
+                     'IcoPath': 'icon.png',
                      "JsonRPCAction": {"method": "openUrl", "parameters": [DIR_BASE_URL]},
                      }]
         logging.info(str(query))

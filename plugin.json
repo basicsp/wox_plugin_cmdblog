@@ -3,10 +3,10 @@
     "ActionKeyword":"cb",
     "Name":"cmd blog",
     "Description":"github cmd blog",
-    "Author":"Perry Sun",
+    "Author":"perrysun82@gmail.com",
     "Version":"1.0.0",
     "Language":"python",
-    "Website":"https://github.com/",
+    "Website":"https://github.com/basicsp/cmdblog",
     "ExecuteFileName":"main.py",
     "IcoPath":"icon.png"
 }
