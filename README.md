@@ -19,6 +19,16 @@ wox地址：http://wox.one
 
 python项目每次由wox调用时会重新加载，修改py文件可以即时生效，调试方便。
 
+wox里需要制定Python的安装位置为：D:\Anaconda3
+
+如果pip出错，执行：python -m ensurepip    python -m pip install --upgrade pip
+
+如果插件不执行，请查看cmd_error.log文件，多半是缺少以下两个库：
+
+pip install clipboard
+
+pip install markdown_to_json
+
 ## 用法：
 
 cb update：把github仓库down到当前目录cmdblog中，后续均为本地搜索。
